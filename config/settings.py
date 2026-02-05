@@ -3,37 +3,38 @@ import streamlit as st
 def apply_styles():
     st.markdown("""
         <style>
-        /* Fondo General y tipografía legible */
+        /* Forzar fondo claro y sólido para legibilidad */
         .stApp { 
-            background-color: #F8FAFC !important; 
+            background-color: #F1F5F9 !important; 
         }
         
-        /* Eliminar espacio superior del header oculto */
-        .block-container {
-            padding-top: 0rem !important;
-            margin-top: -2rem;
+        /* Hacer que las métricas y textos sean visibles (Oscuros) */
+        .stMarkdown, p, h1, h2, h3, span {
+            color: #1E293B !important;
         }
 
-        /* Corregir inputs para que no desaparezcan visualmente */
-        .stTextInput input {
+        /* Contenedores de tarjetas del Dashboard */
+        div[data-testid="stMetric"] {
             background-color: white !important;
-            color: #1E293B !important;
-            border: 1px solid #CBD5E1 !important;
-            border-radius: 8px !important;
+            padding: 15px !important;
+            border-radius: 10px !important;
+            border: 1px solid #E2E8F0 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
         }
-        
-        /* Estilo del botón de Salud ERP */
-        .stButton>button {
+
+        /* Ajuste de la barra lateral (Sidebar) */
+        [data-testid="stSidebar"] {
             background-color: #0F172A !important;
+        }
+        [data-testid="stSidebar"] * {
             color: white !important;
-            border-radius: 8px;
-            font-weight: 700;
-            width: 100%;
-            border: none;
-            padding: 0.6rem;
+        }
+
+        /* Eliminar espacios vacíos superiores */
+        .block-container {
+            padding-top: 1rem !important;
         }
         
-        /* Ocultar elementos nativos de Streamlit */
         header {visibility: hidden;}
         footer {visibility: hidden;}
         </style>
