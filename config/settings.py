@@ -3,10 +3,18 @@ import streamlit as st
 def apply_styles():
     st.markdown("""
         <style>
-        /* Fondo Oculis y tipografía legible */
-        .stApp { background-color: #F8FAFC !important; }
+        /* Fondo General y tipografía legible */
+        .stApp { 
+            background-color: #F8FAFC !important; 
+        }
         
-        /* Corregir inputs para que no desaparezcan */
+        /* Eliminar espacio superior del header oculto */
+        .block-container {
+            padding-top: 0rem !important;
+            margin-top: -2rem;
+        }
+
+        /* Corregir inputs para que no desaparezcan visualmente */
         .stTextInput input {
             background-color: white !important;
             color: #1E293B !important;
@@ -21,9 +29,12 @@ def apply_styles():
             border-radius: 8px;
             font-weight: 700;
             width: 100%;
+            border: none;
+            padding: 0.6rem;
         }
         
-        /* Ocultar elementos nativos que rompen el diseño */
+        /* Ocultar elementos nativos de Streamlit */
         header {visibility: hidden;}
+        footer {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
