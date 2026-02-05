@@ -3,46 +3,59 @@ from config.settings import apply_styles
 from services.auth_service import AuthService
 from views.login_view import render_login_page
 from views.dashboard_view import render_dashboard
-from adapters.db_adapter import DBAdapter
-
-# 1. Instanciar el adaptador
-db = DBAdapter()
-
-st.set_page_config(page_title="Salud ERP", layout="wide")
-apply_styles()
-
-if 'user' not in st.session_state:
-    st.session_state.user = None
+from views.doc_view import render_doc_page
 
 def main():
-    if not st.session_state.user:
-        render_login_page(AuthService())
-    else:
-        st.sidebar.title("🏥 Salud ERP")
-        opcion = st.sidebar.selectbox("Módulos", ["Dashboard", "Configuración"])
-        
-        if opcion == "Dashboard":
-            render_dashboard()
-        elif opcion == "Configuración":
-            # Implementación visual de la Marca Blanca
-            st.write("## ⚙️ Configuración del Centro de Salud")
-            
-            # Cargar datos actuales
-            config_actual = db.obtener_configuracion()
-            nombre_ini = config_actual['nombre_clinica'].iloc[0] if not config_actual.empty else "Salud ERP"
-            
-            with st.form("form_config"):
-                nombre = st.text_input("Nombre de la Clínica", value=nombre_ini)
-                nit = st.text_input("NIT / Identificación Tributaria")
-                dir_fisica = st.text_input("Dirección Física")
-                
-                if st.form_submit_button("Guardar Cambios Globales"):
-                    db.guardar_configuracion(nombre, nit, dir_fisica)
-                    st.success("Configuración actualizada en la base de datos")
-            
-        if st.sidebar.button("Cerrar Sesión"):
-            st.session_state.user = None
+    # Configuración de página de Streamlit
+    st.set_page_config(
+        page_title="Salud ERP - Gestión Clínica",
+        page_icon="🏥",
+        layout="wide"
+    )
+
+    # Aplicar estilos CSS personalizados
+    apply_styles()
+
+    # Manejo de estado de sesión para autenticación
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
+        st.session_state.user = None
+
+    # Lógica de navegación
+    if not st.session_state.authenticated:
+        # Renderizar login si no está autenticado
+        user_data = render_login_page(AuthService())
+        if user_data:
+            st.session_state.authenticated = True
+            st.session_state.user = user_data
             st.rerun()
+    else:
+        # Sidebar para navegación una vez logueado
+        with st.sidebar:
+            st.title("🏥 Salud ERP")
+            st.write(f"Usuario: **{st.session_state.user.username}**")
+            st.write(f"Rol: {st.session_state.user.role}")
+            
+            st.divider()
+            
+            # Selector de módulos
+            menu_option = st.selectbox(
+                "Módulos",
+                ["Dashboard", "Documentación"]
+            )
+            
+            st.divider()
+            
+            if st.button("Cerrar Sesión"):
+                st.session_state.authenticated = False
+                st.session_state.user = None
+                st.rerun()
+
+        # Renderizar la vista seleccionada
+        if menu_option == "Dashboard":
+            render_dashboard()
+        elif menu_option == "Documentación":
+            render_doc_page()
 
 if __name__ == "__main__":
     main()

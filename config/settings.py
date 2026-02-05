@@ -3,44 +3,48 @@ import streamlit as st
 def apply_styles():
     st.markdown("""
         <style>
-        /* Fondo sólido y limpio */
+        /* 1. Fondo de la App: Gris azulado claro para evitar deslumbramiento */
         .stApp { 
-            background-color: #F8FAFC !important; 
+            background-color: #F1F5F9 !important; 
         }
         
-        /* Títulos en azul oscuro para resaltar */
-        h1, h2, h3 {
+        /* 2. Forzar color de texto oscuro en toda la app */
+        .stMarkdown, p, h1, h2, h3, span, label {
             color: #1E293B !important;
-            font-weight: 700 !important;
         }
 
-        /* Tarjetas de métricas con borde suave */
+        /* 3. Tarjetas de Métricas: Fondo blanco sólido con texto azul oscuro */
         div[data-testid="stMetric"] {
-            background-color: white !important;
+            background-color: #FFFFFF !important;
             padding: 20px !important;
             border-radius: 12px !important;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1) !important;
             border: 1px solid #E2E8F0 !important;
         }
-
-        /* Mejorar legibilidad de las tablas (DataFrames) */
-        .stDataFrame td, .stDataFrame th {
-            color: #334155 !important;
-            font-size: 14px !important;
+        /* Forzar visibilidad de los números de las métricas */
+        div[data-testid="stMetricValue"] > div {
+            color: #0F172A !important;
+            font-weight: 800 !important;
         }
 
-        /* Sidebar elegante */
+        /* 4. Inputs del Login: Bordes definidos y fondo blanco */
+        .stTextInput input {
+            background-color: #FFFFFF !important;
+            color: #1E293B !important;
+            border: 2px solid #CBD5E1 !important;
+        }
+
+        /* 5. Sidebar: Color oscuro para contraste total */
         [data-testid="stSidebar"] {
-            background-color: #1E293B !important;
+            background-color: #0F172A !important;
         }
         [data-testid="stSidebar"] * {
-            color: #F8FAFC !important;
+            color: #FFFFFF !important;
         }
 
-        /* Botón de Cerrar Sesión */
-        .stButton>button {
-            border-radius: 6px !important;
-            transition: 0.3s;
+        /* 6. Eliminar el espacio blanco superior */
+        .block-container {
+            padding-top: 1.5rem !important;
         }
         
         header {visibility: hidden;}
