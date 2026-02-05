@@ -1,6 +1,6 @@
 import streamlit as st
 
-def apply_custom_styles():
+def apply_styles():
     st.markdown("""
         <style>
         /* Fondo Oculis y tipografía legible */
