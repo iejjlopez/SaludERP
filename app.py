@@ -3,7 +3,7 @@ from config.settings import apply_styles
 from services.auth_service import AuthService
 from views.login_view import render_login_page
 from views.dashboard_view import render_dashboard
-from adapters.db_adapter import DBAdapter # Nuevo import
+from adapters.db_adapter import DBAdapter
 
 # 1. Instanciar el adaptador
 db = DBAdapter()
